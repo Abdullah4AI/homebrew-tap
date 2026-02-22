@@ -1,29 +1,23 @@
 class Appledev < Formula
   desc "Apple Developer Toolkit - unified CLI for App Store Connect + iOS app builder"
   homepage "https://github.com/Abdullah4AI/apple-developer-toolkit"
-  version "1.0.0"
+  url "https://github.com/Abdullah4AI/apple-developer-toolkit/archive/refs/tags/v1.1.0.tar.gz"
+  sha256 "7c238581949600a83acd246b459bbc5800c937da32a177b9eb3635c61c34ec0b"
   license "MIT"
 
-  on_macos do
-    if Hardware::CPU.arm?
-      url "https://github.com/Abdullah4AI/apple-developer-toolkit/releases/download/v1.0.0/appledev_1.0.0_darwin_arm64.tar.gz"
-      sha256 "00e646f2a7928b647f2ccb112d1e25d14b72341d77e8bf64822e9ac93293958b"
+  depends_on "go" => :build
+  depends_on :macos
 
-      def install
-        bin.install "appledev_darwin_arm64" => "appledev"
-        bin.install_symlink "appledev" => "appstore"
-        bin.install_symlink "appledev" => "swiftship"
-      end
-    else
-      url "https://github.com/Abdullah4AI/apple-developer-toolkit/releases/download/v1.0.0/appledev_1.0.0_darwin_amd64.tar.gz"
-      sha256 "181a13bfd452f1e6686334b5728f53a0a5c3225282ed73e57f941afea220f664"
-
-      def install
-        bin.install "appledev_darwin_amd64" => "appledev"
-        bin.install_symlink "appledev" => "appstore"
-        bin.install_symlink "appledev" => "swiftship"
-      end
-    end
+  def install
+    ldflags = %W[
+      -s -w
+      -X main.version=#{version}
+      -X main.commit=#{tap.user}
+      -X main.date=#{time.iso8601}
+    ]
+    system "go", "build", *std_go_args(ldflags:), "./cmd/appledev/"
+    bin.install_symlink "appledev" => "appstore"
+    bin.install_symlink "appledev" => "swiftship"
   end
 
   test do
