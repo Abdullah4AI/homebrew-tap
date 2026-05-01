@@ -1,8 +1,8 @@
 class Appledev < Formula
   desc "Apple Developer Toolkit - unified CLI for App Store Connect + iOS app builder"
   homepage "https://github.com/Abdullah4AI/apple-developer-toolkit"
-  url "https://github.com/Abdullah4AI/apple-developer-toolkit/archive/refs/tags/v1.260428.0.tar.gz"
-  sha256 "63de68022ac11b1076242f9d8fb06a7242c6065a93c2c9ab56806191b1c9a8e8"
+  url "https://github.com/Abdullah4AI/apple-developer-toolkit/archive/refs/tags/v1.260501.0.tar.gz"
+  sha256 "cfa76eb16cc27d53758eca1f21cb8ed24bbd9ecf5f64a5a25b8419539247e05c"
   license "MIT"
 
   depends_on "go" => :build
